@@ -116,7 +116,7 @@ class Predictor:
         )
         return X_test, y_test
 
-    def predict_prob(self, X_test: np.ndarray):
+    def predict_proba(self, X_test: np.ndarray):
         """Predict the probability of each tag for the given problem(s).
 
         Args:
@@ -139,7 +139,7 @@ class Predictor:
         Returns:
             ndarray[bool]: The binary result of each tag for the given problem(s).
         """
-        prediction_prob = self.predict_prob(X_test)
+        prediction_prob = self.predict_proba(X_test)
         binary_predictions = np.array(
             [proba[:, 1] > threshold for proba in prediction_prob]
         ).T
@@ -157,7 +157,7 @@ class Predictor:
         """
         return hamming_loss(y_test, binary_prediction)
 
-    def predict_tags(self, X_test: np.ndarray, max_tags: int = np.inf):
+    def predict_problems(self, X_test: np.ndarray, max_tags: int = np.inf):
         """Predict the tags of the given problem(s).
 
         Args:
@@ -167,7 +167,7 @@ class Predictor:
         Returns:
             dict[str, list[str]]: The predicted tags of the given problem(s).
         """
-        prediction = self.predict_prob(X_test)
+        prediction = self.predict_proba(X_test)
         prob = np.array(prediction)[:, :, 1].T
         result = {}
         for problem, content in zip(prob, X_test):
@@ -181,6 +181,18 @@ class Predictor:
                 tag_prob[:max_tags] if len(tag_prob) > max_tags else tag_prob
             )
         return result
+
+    def predict_problem(self, X_test: str, max_tags: int = np.inf):
+        """Predict the tags of the given problem.
+
+        Args:
+            X_test (str): The problem to predict.
+            max_tags (int, optional): Maximum tags to predict. Defaults to np.inf.
+
+        Returns:
+            list[str]: The predicted tags of the given problem.
+        """
+        return self.predict_problems(np.array(X_test), max_tags)[X_test]
 
 
 def test_model():
