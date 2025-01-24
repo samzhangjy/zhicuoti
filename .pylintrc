@@ -1,0 +1,3 @@
+[MASTER]
+ignore=migrations/**
+generated-members="cv2.*"

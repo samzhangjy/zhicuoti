@@ -1,0 +1,46 @@
+Global:
+  model_name: PP-LCNet_x1_0
+Hpi:
+  backend_configs:
+    paddle_infer:
+      trt_dynamic_shapes: &id001
+        x:
+        - - 1
+          - 3
+          - 224
+          - 224
+        - - 1
+          - 3
+          - 224
+          - 224
+        - - 8
+          - 3
+          - 224
+          - 224
+    tensorrt:
+      dynamic_shapes: *id001
+PreProcess:
+  transform_ops:
+  - ResizeImage:
+      resize_short: 256
+  - CropImage:
+      size: 224
+  - NormalizeImage:
+      channel_num: 3
+      mean:
+      - 0.485
+      - 0.456
+      - 0.406
+      order: ''
+      scale: 0.00392156862745098
+      std:
+      - 0.229
+      - 0.224
+      - 0.225
+  - ToCHWImage: null
+PostProcess:
+  Topk:
+    topk: 5
+    label_list:
+    - one_column
+    - two_column

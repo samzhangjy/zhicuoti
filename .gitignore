@@ -1,3 +1,6 @@
-venv-analysis
+venv-analysis-2
+venv
 data/tmp
 **/__pycache__
+.env
+.vscode/
