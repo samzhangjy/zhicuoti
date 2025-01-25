@@ -7,7 +7,13 @@ import pandas as pd
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
-from sklearn.metrics import hamming_loss
+from sklearn.metrics import (
+    accuracy_score,
+    f1_score,
+    hamming_loss,
+    precision_score,
+    recall_score,
+)
 from sklearn.model_selection import GridSearchCV, train_test_split
 from sklearn.multioutput import MultiOutputClassifier
 from sklearn.pipeline import Pipeline
@@ -263,6 +269,27 @@ class Predictor:
         """
         return self.predict_problems(np.array(X_test), max_tags)[X_test]
 
+    def generate_metrics(self, y_test: np.ndarray, binary_prediction: np.ndarray):
+        """Generate metrics for the prediction.
+
+        Args:
+            y_test (np.ndarray): The true labels.
+            binary_prediction (np.ndarray): The binary prediction.
+
+        Returns:
+            dict[str, float]: The metrics of the prediction.
+        """
+
+        metrics = {}
+        metrics["accuracy"] = accuracy_score(y_test, binary_prediction)
+        metrics["precision"] = precision_score(
+            y_test, binary_prediction, average="micro"
+        )
+        metrics["recall"] = recall_score(y_test, binary_prediction, average="micro")
+        metrics["f1"] = f1_score(y_test, binary_prediction, average="micro")
+        metrics["hamming_loss"] = hamming_loss(y_test, binary_prediction)
+        return metrics
+
 
 def test_model(
     data_path: str,
@@ -340,15 +367,6 @@ if __name__ == "__main__":
     #     "./data/ENG-10-tags.csv", range(1000, 6001, 500), logistic=False, no_jieba=False
     # )
     predictor = Predictor("./data/MATH-6-tags.csv")
-    predictor.train_model(5600, "random-forest")
-    pred = predictor.predict_problems([
-        "的x的取值范围是3π元A八安断量区5元3ππ元B.22单4元元425π7πD.A",
-        "16.（13分）函数f（x）=sinx+2sinx∈[0，2π]的图象与直线y=k有且仅有工两个不同的交点，求实数k的取值范围得分8=年函国点品出Q7Z#c次TC3O",
-        "元已知余弦函数的图象过点则n7726正的值为得分77V",
-        "10.不等式cosx1的解集-（xE[-π，π4福P九，到]飞为t√31211.不等式的解集是cOSCJ2x+k或+",
-        "12.（10分）用“五点法”作下列函数的图象得分2sinx，x∈0，2π]812(2）y=cos∈[-π，π]工ZAC",
-        "1-aπ13.（10分）若方程sinx在E上元23有两个实数根，求a的取值范围得分s亿个子VV3[-a20间配NZZa≤1-ds1-as",
-        "x15.（5分）函数f（x）=sinx的零点个数为10得分"
-    ], 3)
-    from pprint import pprint
-    pprint(pred)
+    X_test, y_test = predictor.train_model(5500, "random-forest")
+    metrics = predictor.generate_metrics(y_test, predictor.predict_binary(X_test))
+    print(metrics)

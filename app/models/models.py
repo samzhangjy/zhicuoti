@@ -30,6 +30,8 @@ class Class(ClassBase, table=True):
 
     students: list["User"] = Relationship(back_populates="class_")
 
+    invitation_code: str | None = Field(default=None)
+
 
 class ClassCreate(SQLModel):
     """Model for creating a class."""
@@ -42,15 +44,35 @@ class ClassPublic(ClassBase):
     """Model for a public class."""
 
 
+class ClassPublicWithRelations(ClassPublic):
+    """Model for a public class with relations."""
+
+    teachers: list["UserPublic"]
+    students: list["UserPublic"]
+
+
 class Subject(SQLModel, table=True):
     """Database model for a subject."""
 
     id: uuid.UUID = Field(default_factory=uuid.uuid4, primary_key=True)
     name: str
-    description: str
 
     tags: list["Tag"] = Relationship(back_populates="subject")
     teachers: list["User"] = Relationship(back_populates="subject")
+
+
+class SubjectPublic(SQLModel):
+    """Model for a public subject."""
+
+    id: uuid.UUID
+    name: str
+
+
+class SubjectPublicWithRelations(SubjectPublic):
+    """Model for a public subject with relations."""
+
+    tags: list["Tag"]
+    teachers: list["TeacherPublic"]
 
 
 class Tag(SQLModel, table=True):
@@ -107,11 +129,58 @@ class UserPublic(UserBase):
     id: uuid.UUID
 
 
+class UserMe(UserPublic):
+    """Model for a user."""
+
+    phone_number: str
+    owned_classes: list[ClassPublic]
+    class_: ClassPublic | None
+    subject: Subject | None
+
+
+class StudentPublic(UserPublic):
+    """Model for a public student."""
+
+    class_id: uuid.UUID
+
+
+class TeacherPublic(UserPublic):
+    """Model for a public teacher."""
+
+    subject_id: uuid.UUID
+
+
+class StudentPublicWithRelations(StudentPublic):
+    """Model for a public student with relations."""
+
+    class_: ClassPublic
+
+
+class TeacherPublicWithRelations(TeacherPublic):
+    """Model for a public teacher with relations."""
+
+    subject: Subject
+    owned_classes: list[ClassPublic]
+
+
 class UserCreate(UserBase):
     """Model for creating a user."""
 
     password: str
     phone_number: str = Field(max_length=11, min_length=11)
+
+
+class TeacherUpdate(SQLModel):
+    """Model for updating a teacher."""
+
+    phone_number: str
+    subject_id: uuid.UUID | None
+
+
+class StudentUpdate(SQLModel):
+    """Model for updating a student."""
+
+    phone_number: str
 
 
 class Token(SQLModel):

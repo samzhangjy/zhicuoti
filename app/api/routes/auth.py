@@ -9,7 +9,7 @@ from fastapi.security import OAuth2PasswordRequestForm
 from app.api.deps import SessionDep, CurrentUser
 from app.config import settings
 from app.logic.user import authenticate, create_user, get_user_by_phone_number
-from app.models import UserCreate, UserPublic, Token, User
+from app.models import UserCreate, UserPublic, Token, User, UserMe
 from app.security import create_access_token
 
 router = APIRouter(prefix="/auth", tags=["auth"])
@@ -40,7 +40,7 @@ def login(
         access_token=create_access_token(user.id, expires_delta=access_token_expires)
     )
 
-@router.get("/me", response_model=UserPublic)
+@router.get("/me", response_model=UserMe)
 def get_me(current_user: CurrentUser) -> User:
     """Get current user."""
     return current_user
