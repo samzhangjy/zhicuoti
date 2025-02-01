@@ -23,8 +23,8 @@ if config.config_file_name is not None:
 # target_metadata = None
 
 from sqlmodel import SQLModel
-from app.models import *
-from app.config import settings
+from backend.models import *
+from backend.config import settings
 import alembic_postgresql_enum
 
 target_metadata = SQLModel.metadata

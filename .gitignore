@@ -4,3 +4,27 @@ data/tmp
 **/__pycache__
 .env
 .vscode/
+assets/**/*.jpg
+assets/**/*.png
+assets/**/*.jpeg
+tmp/*.jpg
+tmp/*.png
+tmp/*.jpeg
+
+# frontend
+frontend/node_modules
+frontend/.pnp
+frontend/.pnp.*
+
+frontend/.next
+frontend/out
+frontend/build
+
+frontend/npm-debug.log*
+frontend/yarn-debug.log*
+frontend/yarn-error.log*
+frontend/.pnpm-debug.log*
+frontend/.env*
+frontend/.vercel
+frontend/*.tsbuildinfo
+frontend/next-env.d.ts

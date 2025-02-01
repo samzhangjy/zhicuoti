@@ -1,0 +1,87 @@
+.container {
+  height: rem(80px);
+}
+
+.item {
+  height: rem(80px);
+}
+
+.inner {
+  text-decoration: none;
+}
+
+.iconRoot {
+  background: transparent;
+
+  border-radius: 100px;
+
+  width: 64px;
+  height: 32px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    opacity: 0;
+    transition: opacity 150ms;
+    background-color: var(--mantine-color-materialNeutral-10);
+    border-radius: 100px;
+  }
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  &:hover {
+    cursor: pointer;
+    &::after {
+      opacity: 0.08;
+    }
+  }
+
+  &:active {
+    &::after {
+      opacity: 0.12;
+    }
+  }
+
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1));
+}
+
+.iconRootActive {
+  background: transparent;
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+
+  border-radius: 100px;
+
+  width: 64px;
+  height: 32px;
+
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--mantine-color-materialSecondary-2);
+    border-radius: 100px;
+  }
+
+  & > * {
+    position: relative;
+    z-index: 1;
+  }
+}
+
+.itemLabel {
+  color: light-dark(var(--mantine-color-gray-6), var(--mantine-color-dark-1))
+}
+
+.itemLabelActive {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+}

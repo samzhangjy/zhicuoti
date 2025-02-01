@@ -1,0 +1,57 @@
+.ringContainer {
+  padding: var(--mantine-spacing-md);
+}
+
+.ringLabel {
+  font-size: var(--mantine-font-size-lg);
+  color: var(--mantine-color-gray-7) !important;
+  margin-bottom: var(--mantine-spacing-xs);
+  font-weight: 600;
+}
+
+
+.card {
+  background-color: var(--mantine-color-body);
+  border-radius: var(--mantine-radius-md);
+  border: 1px solid var(--mantine-color-default-border);
+}
+
+.label {
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+  font-weight: 700;
+  line-height: 1;
+}
+
+.lead {
+  font-family:
+    Greycliff CF,
+    var(--mantine-font-family);
+  font-weight: 700;
+  font-size: 22px;
+  line-height: 1;
+}
+
+.inner {
+  display: flex;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    flex-direction: column;
+  }
+}
+
+.ring {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+
+  @media (max-width: $mantine-breakpoint-xs) {
+    justify-content: center;
+    margin-top: var(--mantine-spacing-md);
+  }
+}
+
+.subjectRingLabelNoData {
+  fill: var(--mantine-color-dimmed) !important;
+}
