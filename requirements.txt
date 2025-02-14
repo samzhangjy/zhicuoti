@@ -33,6 +33,7 @@ cycler==0.12.1
 Cython==3.0.11
 dataclasses-json==0.6.7
 decorator==5.1.1
+distro==1.9.0
 dnspython==2.7.0
 easydict==1.13
 email_validator==2.2.0
@@ -70,6 +71,7 @@ imgaug==0.4.0
 itsdangerous==2.2.0
 jieba==0.42.1
 Jinja2==3.1.5
+jiter==0.8.2
 joblib==1.4.2
 jsonpatch==1.33
 jsonpath-python==1.0.6
@@ -114,6 +116,7 @@ nvidia-nccl-cu12==2.19.3
 nvidia-nvjitlink-cu12==12.6.85
 nvidia-nvtx-cu12==12.4.127
 olefile==0.47
+openai==1.61.1
 openapi-schema-validator==0.6.3
 openapi-spec-validator==0.7.1
 opencv-contrib-python==4.11.0.86
