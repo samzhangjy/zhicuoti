@@ -313,6 +313,9 @@ export default function ClassAnalyzeOverviewPage() {
   return (
     <Container>
       <Title>班级 「{cls?.name}」 分析</Title>
+      <Text c="gray" mt="md">
+        {cls?.description ?? "暂无描述。"}
+      </Text>
       <Space h={60} />
       {loading ? (
         <Skeleton h={300} />
@@ -525,23 +528,31 @@ export default function ClassAnalyzeOverviewPage() {
                     <BarChart
                       h={200}
                       w="100%"
-                      data={Object.keys(mySubjectAnalysis.tags_cnt).map((tag) => {
-                        let cnt = 0;
-                        Object.keys(mySubjectAnalysis.date_cnt).forEach((date) => {
-                          cnt += mySubjectAnalysis.tags_cnt[tag].date[date];
-                        });
-                        return {
-                          tag,
-                          cnt,
-                        };
-                      })}
+                      data={Object.keys(mySubjectAnalysis.tags_cnt).map(
+                        (tag) => {
+                          let cnt = 0;
+                          Object.keys(mySubjectAnalysis.date_cnt).forEach(
+                            (date) => {
+                              cnt += mySubjectAnalysis.tags_cnt[tag].date[date];
+                            }
+                          );
+                          return {
+                            tag,
+                            cnt,
+                          };
+                        }
+                      )}
                       dataKey="tag"
-                      series={[{name: "cnt", color: "indigo.6", label: "题数"}]}
+                      series={[
+                        { name: "cnt", color: "indigo.6", label: "题数" },
+                      ]}
                       getBarColor={(value) => {
                         let total = 0;
-                        Object.keys(mySubjectAnalysis.tags_cnt).forEach((tag) => {
-                          total += mySubjectAnalysis.tags_cnt[tag].cnt;
-                        });
+                        Object.keys(mySubjectAnalysis.tags_cnt).forEach(
+                          (tag) => {
+                            total += mySubjectAnalysis.tags_cnt[tag].cnt;
+                          }
+                        );
                         return value / total >= 0.3 ? "red.6" : "teal.6";
                       }}
                     />
